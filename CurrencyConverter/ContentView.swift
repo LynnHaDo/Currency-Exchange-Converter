@@ -10,28 +10,17 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         ZStack {
-            // Background image
-            
-            VStack {
-                // Logo
+            TabView {
+                HomeView().tabItem {
+                    Label("Calculate", systemImage: "house")
+                }
                 
-                // Title
+                InfoView().tabItem {
+                    Label("Info", systemImage: "info")
+                }
                 
-                // Conversion input
-                HStack {
-                    // Left side: Input 
-                    VStack {
-                        // Currency
-                        
-                        // Textfield
-                    }
-                    // Equal
-                    // Right side: Output
-                    VStack {
-                        // Currency
-                        
-                        // Textfield
-                    }
+                StatusView().tabItem {
+                    Label("Status", systemImage: "checkmark.seal")
                 }
             }
         }
