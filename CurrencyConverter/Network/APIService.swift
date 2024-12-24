@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct APIService {
+    static let shared = APIService()
+    
     // Process a request
-    func fetchData<T: Decodable>(urlString: String, completion: @Sendable @escaping (T?, ErrorModel?) -> ())
+    static func fetchData<T: Decodable>(urlString: String, completion: @Sendable @MainActor @escaping (T?, ErrorModel?) -> ())
     {
         guard let url = URL(string: urlString) else { return }
         
@@ -20,11 +22,11 @@ struct APIService {
             }
             
             DispatchQueue.main.async {
-                if let error = self.isErrorOccurred(response: res, data: data) {
+                if let error = isErrorOccurred(response: res, data: data) {
                     completion(nil, error)
                 }
                 
-                if let modeledData: T = self.onSuccess(data: data) {
+                if let modeledData: T = onSuccess(data: data) {
                     completion(modeledData, nil)
                 }
             }
@@ -33,11 +35,11 @@ struct APIService {
     
     // Find any error occurred on sending a request
     // Return nil if there is no error
-    func isErrorOccurred(response: URLResponse?, data: Data?) -> ErrorModel? {
+    static func isErrorOccurred(response: URLResponse?, data: Data?) -> ErrorModel? {
         if let httpResponse = response as? HTTPURLResponse {
             if httpResponse.statusCode != 200 {
                 // Error occurred
-                let error = self.onError(httpResponse: httpResponse, data: data)
+                let error = onError(httpResponse: httpResponse, data: data)
                 return error
             }
         }
@@ -47,7 +49,7 @@ struct APIService {
     
     // If the data returned is an error message,
     // parse the error object and return an ErrorModel object/nil
-    func onError(httpResponse: HTTPURLResponse, data: Data?) -> ErrorModel? {
+    static func onError(httpResponse: HTTPURLResponse, data: Data?) -> ErrorModel? {
         print("Status code: \(httpResponse.statusCode)")
         
         let error: ErrorModel?
@@ -68,7 +70,7 @@ struct APIService {
     
     // If the data contained valid, parsable data
     // then parse JSON data and return data of specified type
-    func onSuccess<T: Decodable>(data: Data?) -> T? {
+    static func onSuccess<T: Decodable>(data: Data?) -> T? {
         guard let data = data else { return nil }
         
         do {

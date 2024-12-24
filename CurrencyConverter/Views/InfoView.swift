@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct InfoView: View {
+    
+    
+    
     var body: some View {
         ZStack {
             // Background color
@@ -16,9 +19,9 @@ struct InfoView: View {
             // Content
             VStack {
                 // Title
-                Text("Information")
-                    .font(Font.custom("HostGrotesk-Bold", size: 24, relativeTo: .title))
-                    .foregroundStyle(.text)
+                Text("Supported currencies").title() 
+                
+                
             }
         }
     }
