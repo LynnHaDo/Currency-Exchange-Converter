@@ -9,23 +9,29 @@ import SwiftUI
 
 struct InfoView: View {
     
+    let currencies: [CurrencyModel]?
+    let isCurrencyDataAvailable: Bool
+    let errorObj: ErrorModel?
+    
     var body: some View {
-        ZStack {
-            // Background color
-            Color.pastelGreen.ignoresSafeArea()
-            
-            VStack {
-                // Display current rates
-                RatesView()
+        NavigationStack {
+            ZStack {
+                // Background color
+                Color.pastelGreen.ignoresSafeArea()
                 
-                // Display available currencies
-                CurrenciesView()
+                VStack {
+                    // Display current rates
+                    RatesView(currencies: self.currencies,
+                              isCurrencyDataAvailable: self.isCurrencyDataAvailable,
+                              currencyErrorObj: self.errorObj)
+                    
+                    // Display available currencies
+                    CurrenciesView(currencies: self.currencies,
+                                   isDataAvailable: self.isCurrencyDataAvailable,
+                                   errorObj: self.errorObj)
+                }
             }
         }
-        
+        .pickerStyle(.navigationLink)
     }
-}
-
-#Preview {
-    InfoView()
 }

@@ -9,33 +9,9 @@ import SwiftUI
 
 struct CurrenciesView: View {
     
-    var statusIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    
-    @State var isDataAvailable: Bool = false
-    @State var errorObj: ErrorModel?
-    @State var currencies: [CurrencyModel]?
-    
-    // Get all the available currencies
-    func getCurrencies() {
-        statusIndicator.startAnimating()
-        
-        let url = Routes.currenciesUrl
-        
-        APIService.fetchData(urlString: url) {
-            (response: [CurrencyModel]?, error: ErrorModel?) in
-            
-            if let error = error {
-                self.errorObj = ErrorModel(code: error.code, message: error.message)
-            }
-            
-            if !response!.isEmpty {
-                self.isDataAvailable = true
-                self.currencies = response
-            }
-            
-            self.statusIndicator.dismissLoader()
-        }
-    }
+    let currencies: [CurrencyModel]?
+    let isDataAvailable: Bool
+    let errorObj: ErrorModel?
     
     @ViewBuilder
     var body: some View {
@@ -61,7 +37,7 @@ struct CurrenciesView: View {
             }
             else {
                 // Title
-                Text("Supported currencies").title().padding(10)
+                Text("Supported currencies").title().contentMargins(.bottom, 30)
                 
                 // Display all currencies
                 ScrollView {
@@ -73,9 +49,7 @@ struct CurrenciesView: View {
                 .list() 
             }
         }
-        .onAppear() {
-            getCurrencies()
-        }
+        
     }
 }
 
@@ -92,6 +66,6 @@ struct CurrencyRowView: View {
                 Text(description).frame(width: metrics.size.width * 0.6, alignment: .leading)
             }
         }
-        .frame(height: 35)
+        .frame(width: 350, height: 35)
     }
 }

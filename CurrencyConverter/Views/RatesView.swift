@@ -13,7 +13,12 @@ struct RatesView: View {
     @State var isDataAvailable: Bool = false
     @State var errorObj: ErrorModel?
     @State var selectedDate: Date = Date.now
+    @State var selectedBaseCurrency: String = "EUR"
     @State var rates: [RateItem]?
+    
+    let currencies: [CurrencyModel]?
+    let isCurrencyDataAvailable: Bool
+    let currencyErrorObj: ErrorModel?
     
     func convertDateToString(date: Date) -> String {
         let dateFormatter = DateFormatter()
@@ -22,10 +27,10 @@ struct RatesView: View {
     }
     
     // Get all the available rates
-    func getRatesByDate(dateString: String) {
+    func getRates(dateString: String, baseCurrency: String) {
         statusIndicator.startAnimating()
         
-        let url = Routes.historyDetailsUrl + "&date=\(dateString)"
+        let url = Routes.historyDetailsUrl + "&base_currency=\(baseCurrency)&date=\(dateString)"
         
         APIService.fetchData(urlString: url) {
             (response: HistoryDetailsModel?, error: ErrorModel?) in
@@ -48,22 +53,42 @@ struct RatesView: View {
             // Title
             Text("Rates").title().padding(10)
             
-            Text("Date: \(convertDateToString(date: selectedDate)) | Base currency: EUR")
+            Text("Date: \(convertDateToString(date: selectedDate))")
+                .regular().padding(5)
+            
+            Text("Base currency: \(selectedBaseCurrency)")
                 .regular().padding(10)
             
-            // Date selector
+            // Selectors
             HStack {
                 Spacer()
-                DatePicker(selection: $selectedDate,
-                           in: ...Date.now,
-                           displayedComponents: .date)
-                {
-                    Text("Select a date")
+                
+                VStack {
+                    // Pick a date to retrieve currency rates from
+                    DatePicker(selection: $selectedDate,
+                               in: ...Date.now,
+                               displayedComponents: .date)
+                    {
+                        Text("Select a date")
+                    }
+                    .onChange(of: selectedDate) {
+                        getRates(dateString: convertDateToString(date: selectedDate),
+                                 baseCurrency: selectedBaseCurrency.lowercased())
+                    }
+                    
+                    if (isCurrencyDataAvailable && !self.currencies!.isEmpty) {
+                        Picker("Select the base currency", selection: $selectedBaseCurrency) {
+                            ForEach(0..<currencies!.count, id: \.self) { idx in
+                                Text(currencies![idx].description).tag(currencies![idx].symbol)
+                            }
+                        }
+                        .onChange(of: selectedBaseCurrency) {
+                            getRates(dateString: convertDateToString(date: selectedDate),
+                                     baseCurrency: selectedBaseCurrency.lowercased())
+                        }
+                    }
                 }
-                .frame(width: 300)
-                .onChange(of: selectedDate) {
-                    getRatesByDate(dateString: convertDateToString(date: selectedDate))
-                }
+                
                 Spacer()
             }
             
@@ -86,16 +111,21 @@ struct RatesView: View {
                     
                     Spacer()
                 }
+                .padding(20)
             }
             else {
                 // Display all rates
                 if (rates!.count == 0)
                 {
                     VStack {
-                        Text("No rates available on this date.").regular().padding(10)
-                        Text("Please select another date.").caption()
+                        Text("No rates available on this date or with this currency.")
+                            .regular()
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(10)
+                        Text("Please select another date or currency.").caption()
                     }
                     .multilineTextAlignment(.center)
+                    .padding(20)
                 }
                 else {
                     ScrollView {
@@ -105,12 +135,15 @@ struct RatesView: View {
                                          value: rates![idx].value)
                         }
                     }
-                    .list() 
+                    .list()
+                    .contentMargins([.top, .bottom], 20)
                 }
             }
         }
+        .frame(width: 350)
         .onAppear() {
-            getRatesByDate(dateString: convertDateToString(date: selectedDate))
+            getRates(dateString: convertDateToString(date: selectedDate),
+                     baseCurrency: selectedBaseCurrency.lowercased())
         }
     }
 }
@@ -131,6 +164,6 @@ struct RatesRowView: View {
                 Text(String(format: "%.2f", value)).frame(width: metrics.size.width * 0.3, alignment: .leading)
             }
         }
-        .frame(height: 35)
+        .frame(width: 350, height: 35)
     }
 }

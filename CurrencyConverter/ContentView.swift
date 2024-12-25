@@ -8,6 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
+    var statusIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
+    @State var isDataAvailable: Bool = false
+    @State var errorObj: ErrorModel?
+    
+    @State var currencies: [CurrencyModel]?
+    
+    // Get all the available currencies
+    func getCurrencies()  {
+        statusIndicator.startAnimating()
+        
+        let url = Routes.currenciesUrl
+        
+        APIService.fetchData(urlString: url) {
+            (response: [CurrencyModel]?, error: ErrorModel?) in
+            
+            if let error = error {
+                self.errorObj = ErrorModel(code: error.code, message: error.message)
+            }
+            
+            if !response!.isEmpty {
+                self.isDataAvailable = true
+                self.currencies = response
+            }
+            
+            self.statusIndicator.dismissLoader()
+        }
+    }
+    
     var body: some View {
         ZStack {
             TabView {
@@ -15,7 +44,9 @@ struct ContentView: View {
                     Label("Calculate", systemImage: "house")
                 }
                 
-                InfoView().tabItem {
+                InfoView(currencies: self.currencies,
+                         isCurrencyDataAvailable: self.isDataAvailable,
+                         errorObj: self.errorObj).tabItem {
                     Label("Info", systemImage: "info")
                 }
                 
@@ -23,6 +54,9 @@ struct ContentView: View {
                     Label("Status", systemImage: "checkmark.seal")
                 }
             }
+        }
+        .onAppear() {
+            getCurrencies()
         }
     }
 }
