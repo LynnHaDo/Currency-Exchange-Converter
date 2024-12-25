@@ -19,19 +19,7 @@ struct CurrenciesView: View {
             if !isDataAvailable {
                 HStack {
                     Spacer()
-                    
-                    VStack {
-                        if (errorObj != nil)
-                        {
-                            Text("An error occurred: \(errorObj!.code)").title()
-                            Text(errorObj!.message).regular()
-                        }
-                        else {
-                            Text("An error occurred").title()
-                            Text("Please try again later.").regular()
-                        }
-                    }
-                    
+                    ErrorMessageView(errorObj: errorObj)
                     Spacer()
                 }
             }

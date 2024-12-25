@@ -20,12 +20,6 @@ struct RatesView: View {
     let isCurrencyDataAvailable: Bool
     let currencyErrorObj: ErrorModel?
     
-    func convertDateToString(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.string(from: date)
-    }
-    
     // Get all the available rates
     func getRates(dateString: String, baseCurrency: String) {
         statusIndicator.startAnimating()
@@ -53,7 +47,7 @@ struct RatesView: View {
             // Title
             Text("Rates").title().padding(10)
             
-            Text("Date: \(convertDateToString(date: selectedDate))")
+            Text("Date: \(StringFormatters.convertDateToString(date: selectedDate))")
                 .regular().padding(5)
             
             Text("Base currency: \(selectedBaseCurrency)")
@@ -72,7 +66,7 @@ struct RatesView: View {
                         Text("Select a date")
                     }
                     .onChange(of: selectedDate) {
-                        getRates(dateString: convertDateToString(date: selectedDate),
+                        getRates(dateString: StringFormatters.convertDateToString(date: selectedDate),
                                  baseCurrency: selectedBaseCurrency.lowercased())
                     }
                     
@@ -83,7 +77,7 @@ struct RatesView: View {
                             }
                         }
                         .onChange(of: selectedBaseCurrency) {
-                            getRates(dateString: convertDateToString(date: selectedDate),
+                            getRates(dateString: StringFormatters.convertDateToString(date: selectedDate),
                                      baseCurrency: selectedBaseCurrency.lowercased())
                         }
                     }
@@ -117,15 +111,8 @@ struct RatesView: View {
                 // Display all rates
                 if (rates!.count == 0)
                 {
-                    VStack {
-                        Text("No rates available on this date or with this currency.")
-                            .regular()
-                            .fixedSize(horizontal: false, vertical: true)
-                            .padding(10)
-                        Text("Please select another date or currency.").caption()
-                    }
-                    .multilineTextAlignment(.center)
-                    .padding(20)
+                    ErrorMessageView(errorObj: ErrorModel(code: "400",
+                                                          message: "No rates available on this date or with this currency. Please select another date or currency."))
                 }
                 else {
                     ScrollView {
@@ -142,7 +129,7 @@ struct RatesView: View {
         }
         .frame(width: 350)
         .onAppear() {
-            getRates(dateString: convertDateToString(date: selectedDate),
+            getRates(dateString: StringFormatters.convertDateToString(date: selectedDate),
                      baseCurrency: selectedBaseCurrency.lowercased())
         }
     }

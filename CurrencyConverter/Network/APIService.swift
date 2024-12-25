@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct APIService {
-    static let shared = APIService()
-    
     // Process a request
     static func fetchData<T: Decodable>(urlString: String, completion: @Sendable @MainActor @escaping (T?, ErrorModel?) -> ())
     {

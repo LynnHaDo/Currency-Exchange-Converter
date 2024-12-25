@@ -40,7 +40,8 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             TabView {
-                HomeView().tabItem {
+                HomeView(isCurrencyDataAvailable: self.isDataAvailable, currencies: self.currencies,
+                         errorObj: self.errorObj).tabItem {
                     Label("Calculate", systemImage: "house")
                 }
                 
