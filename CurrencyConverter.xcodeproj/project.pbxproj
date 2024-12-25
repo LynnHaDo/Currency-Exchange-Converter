@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9194733C2D1CB83000395F64 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9194733B2D1CB82A00395F64 /* README.md */; };
+		919473402D1CB89000395F64 /* business and finance _ bitcoin, crypto, cryptocurrency, logo, finance, bank, banking.png in Resources */ = {isa = PBXBuildFile; fileRef = 9194733F2D1CB89000395F64 /* business and finance _ bitcoin, crypto, cryptocurrency, logo, finance, bank, banking.png */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		9111A17B2D1752D6007A1656 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +32,8 @@
 		9111A16A2D1752D5007A1656 /* CurrencyConverter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyConverter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9111A17A2D1752D6007A1656 /* CurrencyConverterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurrencyConverterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9111A1842D1752D6007A1656 /* CurrencyConverterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurrencyConverterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9194733B2D1CB82A00395F64 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9194733F2D1CB89000395F64 /* business and finance _ bitcoin, crypto, cryptocurrency, logo, finance, bank, banking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "business and finance _ bitcoin, crypto, cryptocurrency, logo, finance, bank, banking.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -92,6 +99,8 @@
 				9111A17D2D1752D6007A1656 /* CurrencyConverterTests */,
 				9111A1872D1752D6007A1656 /* CurrencyConverterUITests */,
 				9111A16B2D1752D5007A1656 /* Products */,
+				9194733B2D1CB82A00395F64 /* README.md */,
+				9194733F2D1CB89000395F64 /* business and finance _ bitcoin, crypto, cryptocurrency, logo, finance, bank, banking.png */,
 			);
 			sourceTree = "<group>";
 		};
@@ -225,6 +234,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9194733C2D1CB83000395F64 /* README.md in Resources */,
+				919473402D1CB89000395F64 /* business and finance _ bitcoin, crypto, cryptocurrency, logo, finance, bank, banking.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
