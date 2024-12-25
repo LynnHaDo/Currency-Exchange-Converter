@@ -15,6 +15,7 @@ struct StatusView: View {
     @State var statusDescription: String! = ""
     @State var statusImage: String! = ""
     
+    // Get status of the API 
     func getAPIStatus() {
          let url = Routes.checkOnlineUrl
         
@@ -46,16 +47,27 @@ struct StatusView: View {
             
             // Content
             VStack {
-                // Title
-                Text(status).title() 
-                
-                Text(statusDescription).regular()
-                
+                // Status image
                 Image(statusImage)
                     .resizable()
                     .scaledToFit()
                     .frame(height: 28)
                     .foregroundColor(.text)
+                
+                // Title
+                Text(status).title() 
+                
+                // Description
+                HStack {
+                    Spacer()
+                    
+                    VStack {
+                        Text(statusDescription).regular().multilineTextAlignment(.center)
+                        Text("View https://ratesexchange.eu for more details").caption().multilineTextAlignment(.center)
+                    }
+                    
+                    Spacer()
+                }
             }
         }
         .onAppear() {

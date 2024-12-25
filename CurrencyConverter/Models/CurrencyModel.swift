@@ -7,7 +7,7 @@
 
 // GET: /client/currencies
 // Params: apiKey
-struct CurrencyModel: Decodable {
+struct CurrencyModel: Decodable {    
     let symbol: String
     let description: String 
 }
