@@ -46,8 +46,8 @@
 ## Demo
 
 <div align="center">
-  [![Currency Converter Demo](https://raw.githubusercontent.com/LynnHaDo/Currency-Exchange-Converter/Public/logo.png)]
-  (https://github.com/user-attachments/assets/8fe40ca7-05c6-490f-b564-f598c3dbaf57)
+  <video src="https://github.com/user-attachments/assets/8fe40ca7-05c6-490f-b564-f598c3dbaf57"
+         width="320">
 </div>
 
 ### Screen layouts
