@@ -46,18 +46,17 @@
 <!-- UPDATES -->
 ## Demo
 
-<video width="320" height="240" margin="10 auto" align="center" autoplay>
-  <source src="Public/demo.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+<div align="center">
+  <video src="Public/demo.mp4" width="320" height="240" margin="10 auto" controls></video>
+</div>
 
 ### Screen layouts
 
-<img align="center" src="Public/ip_16.png" width="320px" margin="10 auto"/>
+<img align="center" src="Public/ip_16.png" margin="10 auto"/>
 
 <p align="center">iPhone 16 Pro</p>
 
-<img align="center" src="Public/ip_se.png" width="320px" margin="10 auto"/>
+<img align="center" src="Public/ip_se.png" margin="10 auto"/>
 
 <p align="center">iPhone SE</p>
 
