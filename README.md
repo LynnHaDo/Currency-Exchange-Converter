@@ -4,7 +4,7 @@
 <br />
 <div align="center">
 
-<img align="center" src="logo.png" width="40px"/>
+<img align="center" src="Public/logo.png" width="40px"/>
 
 <h3 align="center">Currency Converter</h3>
 
@@ -36,8 +36,7 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#build-locally">Build Locally</a></li>
       </ul>
     </li>
     <li><a href="#contact">Contact</a></li>
@@ -47,40 +46,47 @@
 <!-- UPDATES -->
 ## Demo
 
+<video width="320" height="240" margin="10 auto" align="center" autoplay>
+  <source src="Public/demo.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+### Screen layouts
+
+<img align="center" src="Public/ip_16.png" width="320px" margin="10 auto"/>
+
+<p align="center">iPhone 16 Pro</p>
+
+<img align="center" src="Public/ip_se.png" width="320px" margin="10 auto"/>
+
+<p align="center">iPhone SE</p>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+This is my first attempt at making a SwiftUI app! Using the [RatesExchange API](https://ratesexchange.eu/Docs), I created a simple currency converter app that fetches currency data from the API, and rendered those to view. The endpoints I utilized throughout this project include: 
 
+- `/client/checkapi`: Check API status
+- `/client/historydetails`: Get detailed history rates
+- `​/client​/convertdetails`: Convert currency details
+- `/client/currencies`: Get available currencies
+
+(No hard-coded calculations were made. All conversion results are supported by the APIs.)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
 
-- [NodeJS](https://nodejs.org/en)
-- [React v18.3.1](https://react.dev/reference/react)
-- [MediaPipe (Tasks-vision: v0.10.14)](https://ai.google.dev/edge/mediapipe/solutions/guide)
-    - [Gesture Recognition](https://ai.google.dev/edge/mediapipe/solutions/vision/gesture_recognizer/web_js)
-    - [Hand landmark detection](https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker/web_js)
-- [Next.js v13.5.6](https://nextjs.org/)
-- [React Bootstrap v2.10.4](https://react-bootstrap.netlify.app/)
-- [Ionic React v8.2.6](https://ionicframework.com/docs/intro/cdn#ionic--react)
-
-For complete list, please view the package tree in `requirements.txt`.
+- [SwiftUI](https://developer.apple.com/xcode/swiftui/)
+- [Rates Exchange API](https://ratesexchange.eu/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 
-### Prerequisites
+## Getting Started
 
-
-
-For complete list, please view the package tree in `requirements.txt`.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-### Installation
+### Build locally 
 
 1. Clone the repo
 
@@ -88,10 +94,50 @@ For complete list, please view the package tree in `requirements.txt`.
 git clone https://github.com/LynnHaDo/Currency-Exchange-Converter.git
 ```
 
+2. Sign up for an account at Rates Exchange
+
+3. Copy the API Key 
+
+4. In the `Config` directory, create a file to store the API key and configurations to fetch the data from the API. 
+
+It should look something like:
+
+```
+//
+//  Settings.swift
+//  CurrencyConverter
+//
+//  Created by Do Linh on 12/22/24.
+//
+
+enum Secrets {
+    static let ratesExchangeApiKey = "YOUR_API_KEY"
+}
+
+struct Routes {
+    // Documentation: https://ratesexchange.eu/Docs
+    static let baseUrl = "https://api.ratesexchange.eu/client"
+    
+    // Check API Status
+    static let checkOnlineUrl = "\(baseUrl)/checkapi"
+    // API Key param
+    static let apiKeyParam = "?apiKey=\(Secrets.ratesExchangeApiKey)"
+    // Get the rates from a past date
+    static let historyDetailsUrl = "\(baseUrl)/historydetails\(apiKeyParam)"
+    // Get the converted amount
+    static let convertDetailsUrl = "\(baseUrl)/convertdetails\(apiKeyParam)"
+    // Get the available currencies
+    static let currenciesUrl = "\(baseUrl)/currencies\(apiKeyParam)"
+}
+
+```
+
+If you can use another method to store the API key securely, please do so :) 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- Contact -->
+
 ## Contact
 
 Email: <a href="mailto:do24l@mtholyoke.edu">do24l@mtholyoke.edu</a>
