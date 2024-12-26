@@ -52,11 +52,11 @@
 
 ### Screen layouts
 
-<img align="center" src="Public/ip_16.png" margin="10 auto"/>
+<img align="center" src="Public/ip_16.png" margin="10px auto"/>
 
 <p align="center">iPhone 16 Pro</p>
 
-<img align="center" src="Public/ip_se.png" margin="10 auto"/>
+<img align="center" src="Public/ip_se.png" margin="10px auto"/>
 
 <p align="center">iPhone SE</p>
 
