@@ -46,7 +46,8 @@
 ## Demo
 
 <div align="center">
-  <video src="Public/demo.mp4" width="320" height="240" margin="10 auto" controls></video>
+  [![Currency Converter Demo](https://raw.githubusercontent.com/LynnHaDo/Currency-Exchange-Converter/Public/logo.png)]
+  (https://github.com/user-attachments/assets/8fe40ca7-05c6-490f-b564-f598c3dbaf57)
 </div>
 
 ### Screen layouts
