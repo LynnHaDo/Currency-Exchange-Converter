@@ -12,7 +12,6 @@
 
   <p align="center">
     <br />
-    ·
     <a href="https://github.com/LynnHaDo/Currency-Exchange-Converter/issues">Report Bug</a>
     ·
     <a href="https://github.com/LynnHaDo/Currency-Exchange-Converter/issues">Request Feature</a>
