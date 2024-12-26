@@ -34,10 +34,11 @@ struct CurrenciesView: View {
                                         description: currencies![idx].description)
                     }
                 }
-                .list() 
+                .list()
+                .contentMargins([.top, .bottom], 20)
+                .frame(minHeight: 400, maxHeight: 400)
             }
         }
-        
     }
 }
 

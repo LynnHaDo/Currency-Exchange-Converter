@@ -9,5 +9,5 @@
 // Params: apiKey
 struct CurrencyModel: Decodable {    
     let symbol: String
-    let description: String 
+    let description: String
 }

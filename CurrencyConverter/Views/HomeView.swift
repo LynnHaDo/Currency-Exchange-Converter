@@ -13,8 +13,10 @@ struct HomeView: View {
     @State var selectedDate: Date = Date.now
     @State var leftAmt = ""
     @State var leftCurrency: String = "EUR"
+    @FocusState var leftTyping
     @State var rightAmt = ""
     @State var rightCurrency: String = "USD"
+    @FocusState var rightTyping
     @State var conversionErrorObj: ErrorModel?
     
     let isCurrencyDataAvailable: Bool
@@ -22,32 +24,83 @@ struct HomeView: View {
     let errorObj: ErrorModel?
     
     // Get conversion result
-    func getConversionResult(from: String, to: String, amount: String, date: Date) {
+    func getConversionResult(from inputCurrency: String,
+                             to outputCurrency: String,
+                             amount: String,
+                             date ratesDate: Date,
+                             side inputSide: Bool) {
+        
+        guard StringFormatters.isStringValidNumber(amount) else { return }
+        
         statusIndicator.startAnimating()
         
-        let dateStr = StringFormatters.convertDateToString(date: date)
+        let dateStr = StringFormatters.convertDateToString(date: ratesDate)
         
-        let url = Routes.convertDetailsUrl + "&from=\(from)&currencies=\(to)&amount=\(amount)&date=\(dateStr)"
+        let url = Routes.convertDetailsUrl + "&from=\(inputCurrency)&currencies=\(outputCurrency)&amount=\(amount)&date=\(dateStr)"
         
         APIService.fetchData(urlString: url) {
             (response: ConversionDetailsModel?, error: ErrorModel?) in
             
             if let error = error {
                 self.conversionErrorObj = error
+                clearAll()
             }
             
             if response != nil && !response!.rates.isEmpty {
-                self.conversionErrorObj = nil 
-                rightAmt = StringFormatters.doubleToString(number: response!.rates.first!.value)
+                self.conversionErrorObj = nil
+                let result = StringFormatters.doubleToString(number: response!.rates.first!.value)
+                if (inputSide) {
+                    self.rightAmt = result
+                }
+                else {
+                    self.leftAmt = result
+                }
             }
             else {
                 self.conversionErrorObj = ErrorModel(code: "400",
                                                      message: "Rates unavailable for the selected date and currencies. Please select another date/currencies.")
+                clearAll()
             }
             
             self.statusIndicator.dismissLoader()
         }
+    }
+    
+    // Clear all fields
+    func clearAll() {
+        self.leftAmt = ""
+        self.rightAmt = ""
+    }
+    
+    // Set the right side amount
+    func setRight() {
+        getConversionResult(from: leftCurrency.lowercased(),
+                            to: rightCurrency.lowercased(),
+                            amount: leftAmt,
+                            date: selectedDate,
+                            side: true)
+    }
+    
+    // Set the left side amount
+    func setLeft() {
+        getConversionResult(from: rightCurrency.lowercased(),
+                            to: leftCurrency.lowercased(),
+                            amount: rightAmt,
+                            date: selectedDate,
+                            side: false)
+    }
+    
+    // Swap the left and right sides 
+    func swap() {
+        // Swap the values
+        let tempAmt: String = leftAmt
+        leftAmt = rightAmt
+        rightAmt = tempAmt
         
+        // Swap the currencies
+        let tempCurrency: String = leftCurrency
+        leftCurrency = rightCurrency
+        rightCurrency = tempCurrency
     }
     
     var body: some View {
@@ -103,14 +156,18 @@ struct HomeView: View {
                             TextField("Left amount",
                                       text: $leftAmt)
                                 .textFieldStyle(CustomTextFieldStyle())
-                                
+                                .focused($leftTyping)
                         }
-                        // Equal
+                        
+                        // Swap
                         Image(.exchange)
                             .resizable()
                             .scaledToFit()
                             .frame(height: 28)
                             .foregroundColor(.text)
+                            .onTapGesture {
+                                swap()
+                            }
                         
                         // Right side: Output
                         VStack {
@@ -121,25 +178,45 @@ struct HomeView: View {
                             TextField("Right amount", text: $rightAmt)
                                 .textFieldStyle(CustomTextFieldStyle())
                                 .multilineTextAlignment(.trailing)
-                                .disabled(true)
+                                .focused($rightTyping)
                         }
                         
                         Spacer()
                     }.padding([.top, .bottom], 25)
                     
-                    Button("Calculate") {
-                        getConversionResult(from: leftCurrency.lowercased(),
-                                            to: rightCurrency.lowercased(),
-                                            amount: leftAmt,
-                                            date: selectedDate)
-                    }
-                    .disabled(!StringFormatters.isStringValidNumber(numString: leftAmt))
-                    .buttonStyle(PrimaryButton())
-                    .padding(25)
-                    
                     if (conversionErrorObj != nil) {
                         ErrorMessageView(errorObj: conversionErrorObj)
                     }
+                }
+                .onChange(of: leftAmt) {
+                    if (leftTyping) {
+                        setRight()
+                        rightAmt = leftAmt == "" ? "" : rightAmt
+                    }
+                }
+                .onChange(of: rightAmt) {
+                    if (rightTyping) {
+                        setLeft()
+                        leftAmt = rightAmt == "" ? "" : leftAmt
+                    }
+                }
+                .onChange(of: selectedDate) {
+                    conversionErrorObj = nil
+                    
+                    if (leftTyping)
+                    {
+                        setRight()
+                    }
+                    else
+                    {
+                        setLeft()
+                    }
+                }
+                .onChange(of: leftCurrency) {
+                    setLeft()
+                }
+                .onChange(of: rightCurrency) {
+                    setRight()
                 }
                 .frame(width: 350)
             }

@@ -17,12 +17,12 @@ struct ErrorMessageView: View {
                 Text("An error occurred: \(errorObj!.code)").regular()
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(10)
-                Text(errorObj!.message).caption()
+                Text(errorObj!.message).caption().fixedSize(horizontal: false, vertical: true)
             }
             else {
                 Text("An error occurred").regular().fixedSize(horizontal: false, vertical: true)
                     .padding(10)
-                Text("Please try again later.").caption()
+                Text("Please try again later.").caption().fixedSize(horizontal: false, vertical: true)
             }
         }
         .multilineTextAlignment(.center)

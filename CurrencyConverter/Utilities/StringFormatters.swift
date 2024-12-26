@@ -30,7 +30,7 @@ struct StringFormatters {
     }
     
     // Check if the number is valid
-    static func isStringValidNumber(numString: String) -> Bool {
+    static func isStringValidNumber(_ numString: String) -> Bool {
         return numString.isNumber
     }
 }

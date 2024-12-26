@@ -19,7 +19,7 @@ struct InfoView: View {
                 // Background color
                 Color.pastelGreen.ignoresSafeArea()
                 
-                VStack {
+                ScrollView {
                     // Display current rates
                     RatesView(currencies: self.currencies,
                               isCurrencyDataAvailable: self.isCurrencyDataAvailable,
@@ -30,6 +30,7 @@ struct InfoView: View {
                                    isDataAvailable: self.isCurrencyDataAvailable,
                                    errorObj: self.errorObj)
                 }
+                .frame(maxHeight: .infinity)
             }
         }
         .pickerStyle(.navigationLink)

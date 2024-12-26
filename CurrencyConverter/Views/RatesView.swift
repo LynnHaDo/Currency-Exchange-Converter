@@ -124,6 +124,7 @@ struct RatesView: View {
                     }
                     .list()
                     .contentMargins([.top, .bottom], 20)
+                    .frame(minHeight: 400, maxHeight: 400)
                 }
             }
         }

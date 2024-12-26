@@ -46,11 +46,15 @@
 ## Demo
 
 <div align="center">
-  <video src="https://github.com/user-attachments/assets/8fe40ca7-05c6-490f-b564-f598c3dbaf57"
+  <video src="https://github.com/user-attachments/assets/071f37ce-5ec6-4242-99c2-77b252f2fac8"
          width="320">
 </div>
 
 ### Screen layouts
+
+<img align="center" src="Public/all.png" margin="10px auto"/>
+
+<p align="center">Different formats</p>
 
 <img align="center" src="Public/ip_16.png" margin="10px auto"/>
 
@@ -63,7 +67,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This is my first attempt at making a SwiftUI app! Using the [RatesExchange API](https://ratesexchange.eu/Docs), I created a simple currency converter app that fetches currency data from the API, and rendered those to view. The endpoints I utilized throughout this project include: 
+This is my first attempt at making a SwiftUI app! In an attempt to make this not a simple calculator app, I created a simple currency converter app that fetches currency data from the [Rates Exchange API](https://ratesexchange.eu/Docs), and rendered those to view. The endpoints I utilized throughout this project include: 
 
 - `/client/checkapi`: Check API status
 - `/client/historydetails`: Get detailed history rates
@@ -74,8 +78,16 @@ This is my first attempt at making a SwiftUI app! Using the [RatesExchange API](
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+### Features
+
+- [x] Convert an amount to and from 2 currencies by a specific date 
+- [x] View all available currencies and rates by date 
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ### Built With
 
+- XCode 16.2
 - [SwiftUI](https://developer.apple.com/xcode/swiftui/)
 - [Rates Exchange API](https://ratesexchange.eu/)
 
@@ -140,7 +152,3 @@ If you can use another method to store the API key securely, please do so :)
 ## Contact
 
 Email: <a href="mailto:do24l@mtholyoke.edu">do24l@mtholyoke.edu</a>
-
-
-
-
